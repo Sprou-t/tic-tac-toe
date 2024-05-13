@@ -9,7 +9,7 @@ let gameboard =( ()=>{
     console.log(board);
 
     function getBoard() {//this function is important as we can also implement validation with conditionals
-        return board;
+        return board;``
       }
 
       return {getboard}; //using {} to return properties of an object
