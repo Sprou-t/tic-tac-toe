@@ -7,37 +7,36 @@ let gameboard =( ()=>{
         ['','','']
     ]
 
-    //update the status of the board, deleting the previous version
-    function getBoard() {//this function is important as we can also implement validation with conditionals
-        return board;
-      }
+    //function to initialise the board
 
-      return {getboard}; //using {} to return properties of an object
+    //function to update and mark the board
+
+    //function to restart the game when restart button clicked
+
+    //function to print out the board in the console for debugging purposes
 }) 
 
 //create a player obj
-let player = () =>{
-    let player1;
-    let player2;
-    nameButton = document.querySelector('.name_submit');
-    nameButton.addEventListener('click',(event)=>{
-        event.preventDefault();
-        player1 = document.querySelector('.input_player1').value;
-        player2 = document.querySelector('.input_player2').value;
-        console.log(player1);
-    })
+let player = (name,marking) =>{//it is ok to include eventlistener as that is when we create the player from the factory function
+    
+    getName = () => name;
+    getMarking = () => marking;
 
-    //addmarker for each player
+    return {getName,getMarking}
 }
 
 player();
-//create a gamecontroller object to control the game!
+//create a gamecontroller object to control the game using all the conditionals!
 let gameController = () =>{
+    //create a function that designates the users and changes the users in every turn using conditionals
+        //user marks the board
 
+    //restarts the game
+
+    //creates a checkwin function that checks all the win conditions. Hardcode the win conditions
+    let checkwin = () =>{
+
+    }
 }
-
-//Write a function that will render the contents of the gameboard array to the webpage 
-
-//Write the functions that allow players to add marks to a specific spot on the board by interacting with the appropriate DOM elements 
 
 
