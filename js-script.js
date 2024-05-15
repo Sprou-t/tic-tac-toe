@@ -93,9 +93,9 @@ gameController.markgrid();
  //function to restart the game when restart button clicked
  const restartGame = (() => {
     restartbtn = document.querySelector('.restart_button');
-    restartbtn.addEventListener('click',() => {
-        //receives the entire array and clears the items
+    restartbtn.addEventListener('click',() => {//clears the entire array
+        gameboard.initialiseBoard(); //won't work for now until i update the board obj
     })
-}) 
+}) ();
 
 
