@@ -9,11 +9,11 @@
     left: 400px
 }
 
-.upper, .middle{
+.upper_left, .upper_center,.upper_right, .middle_left, .middle_center, .middle_right{
     border-bottom: 1px solid black;
 }
 
-.center, .right{
+.upper_center, .middle_center, .lower_center,.upper_right, .middle_right, .lower_right {
     border-left: 1px solid black;
 }
 
