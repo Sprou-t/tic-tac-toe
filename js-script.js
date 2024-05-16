@@ -61,30 +61,30 @@ let gameboard = (()=>{
 
     //function to update the board
     
-        gridList.forEach((grid,index)=>{
-            grid.addEventListener('click',(e) =>{
+        gridList.forEach((grid,index)=>{//index rep the no. of the divs
+            
+            grid.addEventListener('click',() =>{
                 let col = index % 3;
                 let row = parseInt(index / 3);
                 console.log(index);
                 console.log(`col:${col}`);
                 console.log(`row:${row}`);
-                if(whoseTurn == player1){
-                    //mark the array
-                    boardArray[row][col] = player1.getMarking(); //rmb the (), w/o it i am calling a property
-                    //transfer the array content to grid to mark it
-                    grid.textContent = boardArray[row][col];
-                    whoseTurn = player2;
-                    console.log('1 fired;');
-                }else{
-                    boardArray[row][col] = player2.getMarking();
-                    grid.textContent = boardArray[row][col];
-                    whoseTurn = player1;
-                    console.log('2 fired');
-                }
-
-                const checkWin = ( ()=> { //check if winning condition is satisfied at every turn
+                if(!grid.textContent){//if grid is empty, mark it
                 
-                    
+                    if(whoseTurn == player1){
+                        //mark the array
+                        boardArray[row][col] = player1.getMarking(); //rmb the (), w/o it i am calling a property
+                        //transfer the array content to grid to mark it
+                        grid.textContent = boardArray[row][col];
+                        whoseTurn = player2;
+                        console.log('player 1 fired;');
+                    }else{
+                        boardArray[row][col] = player2.getMarking();
+                        grid.textContent = boardArray[row][col];
+                        whoseTurn = player1;
+                        console.log('player 2 fired');
+                    }
+                    const checkWin = ( ()=> { //check if winning condition is satisfied at every turn
                         //check for horizontal
                         if(boardArray[0][0] && boardArray[0][0]=== boardArray[0][1] && boardArray[0][2]=== boardArray[0][1] ||
                             boardArray[1][0] && boardArray[1][0]=== boardArray[1][1] && boardArray[1][2]=== boardArray[1][1] ||
@@ -94,9 +94,22 @@ let gameboard = (()=>{
                         }
 
                         //check for vertical
+                        if(boardArray[0][0] && boardArray[0][0]=== boardArray[1][0] && boardArray[2][0]=== boardArray[1][0] ||
+                            boardArray[0][1] && boardArray[0][1]=== boardArray[1][1] && boardArray[2][1]=== boardArray[1][1] ||
+                            boardArray[0][2] && boardArray[0][2]=== boardArray[1][2] && boardArray[2][2]=== boardArray[1][2]
+                        ){
+                            console.log('Vertical strike ! game over!')
+                        }
 
+                        //2 diagonal strikes
+                        if (boardArray[0][0] && boardArray[0][0]=== boardArray[1][1] && boardArray[2][2]=== boardArray[1][1] ||
+                            boardArray[0][2] && boardArray[0][2]=== boardArray[1][1] && boardArray[2][0]=== boardArray[1][1]){
+                                console.log('diagonal strike!')
+                            }
                     
-                }) ();
+                    }) ();
+                    
+                }
             })
         })
     
@@ -122,6 +135,7 @@ let gameboard = (()=>{
     
  
  }
+
  
  
  
