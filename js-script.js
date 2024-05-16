@@ -7,7 +7,7 @@ let gameboard = (()=>{
     // let gridList = document.querySelectorAll('.grid');
 
     let board = [ //initial board
-        ['','',''],
+        ['','',''], //note that an empty string is considered falsy
         ['','',''],
         ['','','']
     ]
@@ -80,7 +80,23 @@ let gameboard = (()=>{
                     grid.textContent = boardArray[row][col];
                     whoseTurn = player1;
                     console.log('2 fired');
-                }    
+                }
+
+                const checkWin = ( ()=> { //check if winning condition is satisfied at every turn
+                
+                    
+                        //check for horizontal
+                        if(boardArray[0][0] && boardArray[0][0]=== boardArray[0][1] && boardArray[0][2]=== boardArray[0][1] ||
+                            boardArray[1][0] && boardArray[1][0]=== boardArray[1][1] && boardArray[1][2]=== boardArray[1][1] ||
+                            boardArray[2][0] && boardArray[2][0]=== boardArray[2][1] && boardArray[2][2]=== boardArray[2][1]
+                        ){
+                            console.log('horizontal strike ! game over!')
+                        }
+
+                        //check for vertical
+
+                    
+                }) ();
             })
         })
     
@@ -103,7 +119,7 @@ let gameboard = (()=>{
 // gameController.markgrid();
  //creates a checkwin function that checks all the win conditions. Hardcode the win conditions
  let checkwin = () =>{
- 
+    
  
  }
  
