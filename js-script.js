@@ -128,15 +128,15 @@ let gameController = (() =>{
        restartbtn.addEventListener('click',() => {//clears the entire array
            console.log('restart!');
            whoseTurn = player1; //turn back to player1
-           boardArray = gameboard.initialiseBoard();//renew the array
+           for(let i = 0; i<3; i++){
+                for(let j = 0; j<3; j++){
+                    boardArray[i][j]='';
+                }
+            }
            //renew UI
            gridList.forEach(grid => {
                grid.textContent = '';
-          
-           //add all the event listeners back
-           gridList.forEach((grid)=>{//index rep the no. of the divs
                grid.addEventListener('click',markGrid); //pass by ref of function
-           })
            });
        })
    }) ();
