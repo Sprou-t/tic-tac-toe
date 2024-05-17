@@ -4,9 +4,6 @@ let gridList = document.querySelectorAll('.grid');
 //create gameboard obj using IIFE as we only need to create 1 obj
 // store the gameboard in a 2d array inside of a gameboard Object
 let gameboard = (()=>{
-   // let gridList = document.querySelectorAll('.grid');
-
-
    let board = [ //initial board
        ['','',''], //note that an empty string is considered falsy
        ['','',''],
@@ -43,7 +40,6 @@ let player = (name,marking) =>{
 
 //create a gamecontroller object to control the game using all the conditionals!
 let gameController = (() =>{
-   //create 2 players
    let player1 = player('Player 1','X');
    let player2 = player('Player 2','O');
 
@@ -53,8 +49,33 @@ let gameController = (() =>{
    //let player1 take the 1st turn
    let whoseTurn = player1;
 
-   //create the ref to the text display div
+   
    let textDisplay = document.querySelector('.text_display');
+   let startBtn = document.querySelector('.start');
+   let playerNameDialog = document.querySelector('.dialog_for_name');
+   let enterNameBtn = document.querySelector('.enter_name_btn');
+   let player1InputBox = document.querySelector('#player1_input');
+   let player2InputBox = document.querySelector('#player2_input');
+
+   //start game when start button clicks
+   let startGame = (() =>{
+   //add event listener to each grid and pop up dialog when start button clicked
+    startBtn.addEventListener('click',()=>{
+        playerNameDialog.showModal();
+        gridList.forEach((grid)=>{//index rep the no. of the divs
+            grid.addEventListener('click',markGrid); //pass by ref of function
+        })
+    })
+    }) ();
+
+    let inputName = (()=>{
+        enterNameBtn.addEventListener('click',(e)=>{
+            e.preventDefault();
+            if(player1InputBox.value && player2InputBox.value){
+                playerNameDialog.close();
+            }
+        })
+    }) ();
 
    //create function
    const markGrid = (event) =>{
@@ -99,12 +120,6 @@ let gameController = (() =>{
            } 
        }   
    }
-
-
-   //add event listener to each grid
-   gridList.forEach((grid)=>{//index rep the no. of the divs
-       grid.addEventListener('click',markGrid); //pass by ref of function
-   })
 
    //create a winner variable that contains the data of the winner
    let winner;
