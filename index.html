@@ -12,19 +12,22 @@
     <div class="wrapper">
         <h1>TIC TAC TOE</h1>
         
-        <div>
-            <dialog class="dialog_for_name">
-                <form action="">
+        <dialog class="dialog_for_name">
+            <form action="" class="pop_up_form">   
+                <div class="row_1">
                     <label for="name">Player 1:</label>
-                    <input name="name" id="player1_input" placeholder="Name" required>
+                    <input autofocus name="name" id="player1_input" placeholder="Name" required>
+                </div>
+                <div class="row_2">
                     <label for="name">Player 2:</label>
                     <input name="name" id="player2_input" placeholder="Name" required>
-                    <button class="enter_name_btn">Enter</button>
-                </form>
-            </dialog>
-        </div>
+                </div>
+                <button class="enter_name_btn">Enter</button>
+            </form>
+        </dialog>
         
-        <div class="game_instructor"></div>
+        
+        <div class="game_instructor">Press start!</div>
 
         <div class="gameboard">
             <div class="grid upper_left"></div>

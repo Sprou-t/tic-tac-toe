@@ -109,20 +109,22 @@ let gameController = (() =>{
            }
 
 
-           // Once user presses the grid and marks it, remove event listener
-           grid.removeEventListener('click', markGrid);
+            // Once user presses the grid and marks it, remove event listener
+            grid.removeEventListener('click', markGrid);
           
            //if win condition appears, remove all the event listener
-           if(checkWin()){ //note that this function can be executed here bcoz this conditional check happens after js file loaded (hence function defined) and eventlistener attached, and happens when user clicks
-               if (winner === player1){
-                //display the winner in the text
-                gameInstructorDiv.textContent = `${player1Name} wins!`
-               }
-               if (winner ===player2){
-                textDisplay.textContent = `${player2Name} wins!`
-               }
+            if(checkWin()){ //note that this function can be executed here bcoz this conditional check happens after js file loaded (hence function defined) and eventlistener attached, and happens when user clicks
+                if (winner === player1){
+                    //display the winner in the text
+                    gameInstructorDiv.textContent = `${player1Name} wins!`
+                }
+                if (winner ===player2){
+                    textDisplay.textContent = `${player2Name} wins!`
+                }
+                //change the background color of the winning grids
+                highlightWinningLine(winningLine);
                 gridList.forEach((grid)=>{//index rep the no. of the divs
-                grid.removeEventListener('click',markGrid); //pass by ref of function
+                    grid.removeEventListener('click',markGrid); //pass by ref of function
                })
            } 
        }   
@@ -130,36 +132,72 @@ let gameController = (() =>{
 
    //create a winner variable that contains the data of the winner
    let winner;
+   let winningLine = [];
 
     const checkWin = ()=> {
         
         for (let i = 0; i < 3; i++) {
             //check for horizontal
             if (boardArray[i][0] && boardArray[i][0] === boardArray[i][1] && boardArray[i][1] === boardArray[i][2]) {
-                if(boardArray[i][0]==='X'){winner = player1}
-                else if(boardArray[i][0]==='O'){winner = player2}
-                console.log('Horizontal strike! Game over!');
+                if(boardArray[i][0]==='X'){
+                    winner = player1}
+
+                else if(boardArray[i][0]==='O'){
+                    winner = player2}
+                
+                winningLine = [
+                    {row:i, col:0},
+                    {row:i, col:1},
+                    {row:i, col:2}
+                ];
                 return true;
             }
             //check for vertical
             if (boardArray[0][i] && boardArray[0][i] === boardArray[1][i] && boardArray[1][i] === boardArray[2][i]) {
-                if(boardArray[0][i]==='X'){winner = player1}
-                else if(boardArray[0][i]==='O'){winner = player2}
-                console.log('Vertical strike! Game over!');
+                if(boardArray[0][i]==='X'){
+                    winner = player1}
+
+                else if(boardArray[0][i]==='O'){
+                    winner = player2}
+                
+                winningLine = [
+                    { row: 0, col: i },
+                    { row: 1, col: i },
+                    { row: 2, col: i }
+                ];
                 return true;
             }
         }
-        //2 diagonal strikes
-        if (boardArray[0][0] && boardArray[0][0]=== boardArray[1][1] && boardArray[2][2]=== boardArray[1][1] ||
-            boardArray[0][2] && boardArray[0][2]=== boardArray[1][1] && boardArray[2][0]=== boardArray[1][1]){
-                if(boardArray[1][1]==='X'){winner = player1}
-                else if(boardArray[1][1]==='O'){winner = player2}
-                console.log('diagonal strike!');
-                return true;
-            }
+        // Check for diagonals
+        if (boardArray[0][0] && boardArray[0][0] === boardArray[1][1] && boardArray[1][1] === boardArray[2][2]) {
+        winner = boardArray[0][0] === 'X' ? player1 : player2;
+        winningLine = [
+            { row: 0, col: 0 },
+            { row: 1, col: 1 },
+            { row: 2, col: 2 }
+        ];
+        return true;
+        }
+
+        if (boardArray[0][2] && boardArray[0][2] === boardArray[1][1] && boardArray[1][1] === boardArray[2][0]) {
+            winner = boardArray[0][2] === 'X' ? player1 : player2;
+            winningLine = [
+                { row: 0, col: 2 },
+                { row: 1, col: 1 },
+                { row: 2, col: 0 }
+            ];
+            return true;
+        }
         
         return false;
    };
+
+   const highlightWinningLine = (winningLine) => {
+    winningLine.forEach(position => {
+        let gridIndex = position.row * 3 + position.col;
+        gridList[gridIndex].style.backgroundColor = 'green';
+    });
+};
 
    // //function to restart the game when restart button clicked
    const restartGame = (() => {
@@ -172,18 +210,21 @@ let gameController = (() =>{
                     boardArray[i][j]=''; //clear the array
                 }
             }
-           //renew UI
-           gridList.forEach(grid => {
-               grid.textContent = '';
-               grid.addEventListener('click',markGrid); //pass by ref of function
+            //renew UI
+            gridList.forEach(grid => {
+                grid.textContent = '';
            
-            //clear the game_instructor paragraph & input section in the dialog
-            gameInstructorDiv.textContent='';
-            player1InputBox.value = '';
-            player2InputBox.value = '';
+                //clear the game_instructor paragraph & input section in the dialog
+                gameInstructorDiv.textContent='Press start!';
+                player1InputBox.value = '';
+                player2InputBox.value = '';
 
-            //addeventlistener back to start button
-            startBtn.addEventListener('click',startGame);
+                //clear the winning highlight background color and the array
+                grid.style.backgroundColor = 'black'
+                winningLine = [];
+
+                //addeventlistener back to start button
+                startBtn.addEventListener('click',startGame);
            
             });
        })
