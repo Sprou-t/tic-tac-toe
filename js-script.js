@@ -163,7 +163,7 @@ let gameController = (() =>{
 
    // //function to restart the game when restart button clicked
    const restartGame = (() => {
-       restartbtn = document.querySelector('.restart_button');
+       restartbtn = document.querySelector('.restart');
        restartbtn.addEventListener('click',() => {//clears the entire array
            console.log('restart!');
            whoseTurn = player1; //turn back to player1
