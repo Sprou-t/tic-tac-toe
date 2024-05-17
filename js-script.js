@@ -56,23 +56,29 @@ let gameController = (() =>{
    let enterNameBtn = document.querySelector('.enter_name_btn');
    let player1InputBox = document.querySelector('#player1_input');
    let player2InputBox = document.querySelector('#player2_input');
+   let gameInstructorDiv = document.querySelector('.game_instructor')
+   let player1Name;
+   let player2Name;
 
    //start game when start button clicks
-   let startGame = (() =>{
+   let startGame = (e) =>{
    //add event listener to each grid and pop up dialog when start button clicked
-    startBtn.addEventListener('click',()=>{
         playerNameDialog.showModal();
         gridList.forEach((grid)=>{//index rep the no. of the divs
             grid.addEventListener('click',markGrid); //pass by ref of function
-        })
-    })
-    }) ();
+        })  
+    } 
+    startBtn.addEventListener('click',startGame)
 
     let inputName = (()=>{
         enterNameBtn.addEventListener('click',(e)=>{
             e.preventDefault();
             if(player1InputBox.value && player2InputBox.value){
                 playerNameDialog.close();
+                player1Name = player1InputBox.value;
+                player2Name = player2InputBox.value;
+                gameInstructorDiv.textContent = `${player1Name}'s turn!`;
+                startBtn.removeEventListener('click',startGame);
             }
         })
     }) ();
@@ -93,12 +99,13 @@ let gameController = (() =>{
                // Transfer the array content to grid to mark it
                grid.textContent = boardArray[row][col];
                whoseTurn = player2;
-               console.log('player 1 fired;');
+               gameInstructorDiv.textContent = `${player2Name}'s turn!`
            } else {
                boardArray[row][col] = player2.getMarking();
                grid.textContent = boardArray[row][col];
                whoseTurn = player1;
                console.log('player 2 fired');
+               gameInstructorDiv.textContent = `${player1Name}'s turn!`
            }
 
 
@@ -109,10 +116,10 @@ let gameController = (() =>{
            if(checkWin()){ //note that this function can be executed here bcoz this conditional check happens after js file loaded (hence function defined) and eventlistener attached, and happens when user clicks
                if (winner === player1){
                 //display the winner in the text
-                textDisplay.textContent = 'Player 1 wins!'
+                gameInstructorDiv.textContent = `${player1Name} wins!`
                }
                if (winner ===player2){
-                textDisplay.textContent = 'Player 2 wins!'
+                textDisplay.textContent = `${player2Name} wins!`
                }
                 gridList.forEach((grid)=>{//index rep the no. of the divs
                 grid.removeEventListener('click',markGrid); //pass by ref of function
