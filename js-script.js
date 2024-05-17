@@ -61,7 +61,7 @@ let gameController = (() =>{
    let player2Name;
 
    //start game when start button clicks
-   let startGame = (e) =>{
+   let startGame = () =>{
    //add event listener to each grid and pop up dialog when start button clicked
         playerNameDialog.showModal();
         gridList.forEach((grid)=>{//index rep the no. of the divs
@@ -176,7 +176,16 @@ let gameController = (() =>{
            gridList.forEach(grid => {
                grid.textContent = '';
                grid.addEventListener('click',markGrid); //pass by ref of function
-           });
+           
+            //clear the game_instructor paragraph & input section in the dialog
+            gameInstructorDiv.textContent='';
+            player1InputBox.value = '';
+            player2InputBox.value = '';
+
+            //addeventlistener back to start button
+            startBtn.addEventListener('click',startGame);
+           
+            });
        })
    }) ();
   
