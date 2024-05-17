@@ -47,14 +47,14 @@ let gameController = (() =>{
    let player1 = player('Player 1','X');
    let player2 = player('Player 2','O');
 
-
    //create the board array
    let boardArray = gameboard.initialiseBoard();
-
 
    //let player1 take the 1st turn
    let whoseTurn = player1;
 
+   //create the ref to the text display div
+   let textDisplay = document.querySelector('.text_display');
 
    //create function
    const markGrid = (event) =>{
@@ -86,8 +86,15 @@ let gameController = (() =>{
           
            //if win condition appears, remove all the event listener
            if(checkWin()){ //note that this function can be executed here bcoz this conditional check happens after js file loaded (hence function defined) and eventlistener attached, and happens when user clicks
-               gridList.forEach((grid)=>{//index rep the no. of the divs
-                   grid.removeEventListener('click',markGrid); //pass by ref of function
+               if (winner === player1){
+                //display the winner in the text
+                textDisplay.textContent = 'Player 1 wins!'
+               }
+               if (winner ===player2){
+                textDisplay.textContent = 'Player 2 wins!'
+               }
+                gridList.forEach((grid)=>{//index rep the no. of the divs
+                grid.removeEventListener('click',markGrid); //pass by ref of function
                })
            } 
        }   
@@ -99,27 +106,37 @@ let gameController = (() =>{
        grid.addEventListener('click',markGrid); //pass by ref of function
    })
 
+   //create a winner variable that contains the data of the winner
+   let winner;
 
-   const checkWin = ()=> {
-       //check for horizontal
-       for (let i = 0; i < 3; i++) {
-           if (boardArray[i][0] && boardArray[i][0] === boardArray[i][1] && boardArray[i][1] === boardArray[i][2]) {
-               console.log('Horizontal strike! Game over!');
-               return true;
-           }
-           if (boardArray[0][i] && boardArray[0][i] === boardArray[1][i] && boardArray[1][i] === boardArray[2][i]) {
-               console.log('Vertical strike! Game over!');
-               return true;
-           }
-       }
-       //2 diagonal strikes
-       if (boardArray[0][0] && boardArray[0][0]=== boardArray[1][1] && boardArray[2][2]=== boardArray[1][1] ||
-           boardArray[0][2] && boardArray[0][2]=== boardArray[1][1] && boardArray[2][0]=== boardArray[1][1]){
-               console.log('diagonal strike!');
-               return true;
-           }
-      
-       return false;
+    const checkWin = ()=> {
+        
+        for (let i = 0; i < 3; i++) {
+            //check for horizontal
+            if (boardArray[i][0] && boardArray[i][0] === boardArray[i][1] && boardArray[i][1] === boardArray[i][2]) {
+                if(boardArray[i][0]==='X'){winner = player1}
+                else if(boardArray[i][0]==='O'){winner = player2}
+                console.log('Horizontal strike! Game over!');
+                return true;
+            }
+            //check for vertical
+            if (boardArray[0][i] && boardArray[0][i] === boardArray[1][i] && boardArray[1][i] === boardArray[2][i]) {
+                if(boardArray[0][i]==='X'){winner = player1}
+                else if(boardArray[0][i]==='O'){winner = player2}
+                console.log('Vertical strike! Game over!');
+                return true;
+            }
+        }
+        //2 diagonal strikes
+        if (boardArray[0][0] && boardArray[0][0]=== boardArray[1][1] && boardArray[2][2]=== boardArray[1][1] ||
+            boardArray[0][2] && boardArray[0][2]=== boardArray[1][1] && boardArray[2][0]=== boardArray[1][1]){
+                if(boardArray[1][1]==='X'){winner = player1}
+                else if(boardArray[1][1]==='O'){winner = player2}
+                console.log('diagonal strike!');
+                return true;
+            }
+        
+        return false;
    };
 
    // //function to restart the game when restart button clicked
@@ -130,7 +147,7 @@ let gameController = (() =>{
            whoseTurn = player1; //turn back to player1
            for(let i = 0; i<3; i++){
                 for(let j = 0; j<3; j++){
-                    boardArray[i][j]='';
+                    boardArray[i][j]=''; //clear the array
                 }
             }
            //renew UI
