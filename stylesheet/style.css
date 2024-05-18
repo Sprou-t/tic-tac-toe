@@ -25,7 +25,7 @@ h1{
 .dialog_for_name{
     position: relative;
     top:240px;
-    left:1000px;
+    left:550px;
     box-shadow: 20px 20px 50px red ;
     border-radius: 8px;
     height: 300px;
