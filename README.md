@@ -1,5 +1,6 @@
 # tic-tac-toe
-
+## Descriptions
+-A tic-tac-toe game using vanilla Javascript, CSS and HTML
 
 ### functions 
 
