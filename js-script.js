@@ -12,23 +12,9 @@ let gameboard = (()=>{
    //function to initialise the board
    const initialiseBoard = () => board;
  
-  
-   //function to print out the board in the console for debugging purposes(prints out the x)
-       //select all the divs first
-   const printGame = () => {
-       //note that these 2 are arguments of the callback function. The way row is used in the next forEach tells JS that row rep each iterable
-       //the way rowIndex is used to multiply shows that it is used as index, starting from 0
-       board.forEach((row,rowIndex)=>{//for each row
-           row.forEach((cell, cellIndex) =>{//for each array item in each row
-               //print the item in the array onto the grid
-               let gridIndex = rowIndex *3 +cellIndex;
-               gridList[gridIndex].textContent = cell;
-           })
-       })
-   }
-   return {initialiseBoard,printGame};
+   return {initialiseBoard};
 }) ();
-gameboard.printGame();
+
 //create 2 player objs using factory function(can be reused)
 let player = (name,marking) =>{
  
@@ -70,7 +56,7 @@ let gameController = (() =>{
     } 
     startBtn.addEventListener('click',startGame)
 
-    let inputName = (()=>{
+    let inputPlayerName = (()=>{
         enterNameBtn.addEventListener('click',(e)=>{
             e.preventDefault();
             if(player1InputBox.value && player2InputBox.value){
@@ -122,7 +108,7 @@ let gameController = (() =>{
                     textDisplay.textContent = `${player2Name} wins!`
                 }
                 //change the background color of the winning grids
-                highlightWinningLine(winningLine);
+                highlightWinningLine(winningLine); //need to input the argument again as winningLine will only be updated when checkWin is truthy
                 gridList.forEach((grid)=>{//index rep the no. of the divs
                     grid.removeEventListener('click',markGrid); //pass by ref of function
                })
@@ -135,7 +121,6 @@ let gameController = (() =>{
    let winningLine = [];
 
     const checkWin = ()=> {
-        
         for (let i = 0; i < 3; i++) {
             //check for horizontal
             if (boardArray[i][0] && boardArray[i][0] === boardArray[i][1] && boardArray[i][1] === boardArray[i][2]) {
@@ -193,8 +178,8 @@ let gameController = (() =>{
    };
 
    const highlightWinningLine = (winningLine) => {
-    winningLine.forEach(position => {
-        let gridIndex = position.row * 3 + position.col;
+    winningGrids.forEach(eachWinningGrid => {
+        let gridIndex = eachWinningGrid.row * 3 + eachWinningGrid.col;
         gridList[gridIndex].style.backgroundColor = 'green';
     });
 };
